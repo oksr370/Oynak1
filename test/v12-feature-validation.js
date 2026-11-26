@@ -1,0 +1,27 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const yks = require('../data/yks-bank');
+const films = require('../data/film-additions');
+const pixels = require('../data/pixel-pool');
+const visual = require('../data/visual-games');
+const music = require('../data/music-expansion');
+const server = fs.readFileSync(require.resolve('../server'), 'utf8');
+const html = fs.readFileSync(require.resolve('../index.html'), 'utf8');
+
+assert.ok(yks.length >= 35, 'YKS soru havuzu geniş olmalı');
+assert.ok(yks.every(q => q.t && Array.isArray(q.o) && q.o.length === 4 && Number.isInteger(q.v) && q.v >= 0 && q.v < 4 && q.x), 'YKS soruları 4 seçenekli ve cevap anahtarlı olmalı');
+assert.ok(yks.some(q => q.c === 'TYT Biyoloji'));
+assert.ok(yks.some(q => q.c === 'AYT Biyoloji'));
+assert.ok(yks.some(q => q.c === 'TYT Türkçe · Yazım'));
+assert.ok(yks.some(q => q.c === 'TYT Türkçe · Noktalama'));
+assert.ok(films.length >= 20, 'Film havuzuna yeni filmler eklenmeli');
+assert.ok(pixels.some(x => x.c === 'Oyun ve Animasyon'));
+assert.ok(visual.PEOPLE_TR.length >= 30 && visual.PEOPLE_WORLD.length >= 30, 'Ünlü havuzları genişlemeli');
+assert.ok(music.length >= 180, 'Şarkı havuzu büyümeli');
+assert.ok(server.includes("'celebmerge'") && server.includes("'yks'"));
+assert.ok(server.includes("'Kuzu Kuzu'") && server.includes("'Rolling in the Deep'"), 'Emoji oyunu şarkı bilmeceleri içermeli');
+assert.ok(server.includes('Bir yıl boyunca hangisini kullanmadan yaşamak daha zor olurdu?'), 'Diğer oyun havuzlarına yeni içerik eklenmeli');
+assert.ok(server.includes("s.on('lobby:config'"));
+assert.ok(html.includes("['celebmerge'") && html.includes("['yks'"));
+assert.ok(html.includes('lobbyConfig') && html.includes('merge-face'));
+console.log('V12 validation passed:', { yks: yks.length, films: films.length, pixels: pixels.length, peopleTr: visual.PEOPLE_TR.length, peopleWorld: visual.PEOPLE_WORLD.length, musicExpansion: music.length });
